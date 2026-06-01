@@ -3454,6 +3454,7 @@ let _googleProvider = null;
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
+    googleProvider.setCustomParameters({ prompt: 'select_account' });
 
     // expose to global scope for button handlers
     window._fbAuth           = auth;
@@ -3606,14 +3607,15 @@ function _shakeField(el) {
   }, 60);
 }
 
-/* ── GOOGLE SIGN-IN (real Firebase popup) ── */
+/* ── GOOGLE SIGN-IN ── */
 function loginWithGoogle() {
   if (!window._fbGooglePopup) {
-    showToast('Firebase loading… please try again in a moment'); return;
+    showToast("Firebase loading… please try again in a moment"); return;
   }
-  const overlay = document.createElement('div');
-  overlay.className = 'gauth-overlay';
-  overlay.id = 'gauth-loading';
+
+  const overlay = document.createElement("div");
+  overlay.className = "gauth-overlay";
+  overlay.id = "gauth-loading";
   overlay.innerHTML = `
     <div class="gauth-logo">
       <svg width="28" height="28" viewBox="0 0 24 24">
@@ -3625,22 +3627,22 @@ function loginWithGoogle() {
     </div>
     <div class="gauth-spinner"></div>
     <div class="gauth-txt">Opening Google Sign-In…</div>
-    <div class="gauth-sub">A popup will appear</div>`;
+    <div class="gauth-sub">A popup window will appear</div>`;
   document.body.appendChild(overlay);
 
   window._fbGooglePopup()
     .then(result => {
-      document.getElementById('gauth-loading')?.remove();
-      // onAuthStateChanged will handle the rest
+      document.getElementById("gauth-loading")?.remove();
     })
     .catch(err => {
-      document.getElementById('gauth-loading')?.remove();
-      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
-        // User closed popup — do nothing
-      } else if (err.code === 'auth/popup-blocked') {
-        showToast('Popup blocked — please allow popups for this site');
+      document.getElementById("gauth-loading")?.remove();
+      if (err.code === "auth/popup-closed-by-user" || err.code === "auth/cancelled-popup-request") {
+        // User closed — do nothing
+      } else if (err.code === "auth/popup-blocked") {
+        showToast("⚠️ Popup blocked! Look for the popup icon in your address bar and allow popups, then try again.");
       } else {
-        showToast('Google sign-in failed. Please try again.');
+        showToast("Google sign-in error: " + (err.code || err.message));
+        console.error("Google auth error:", err);
       }
     });
 }
@@ -3880,13 +3882,17 @@ function confirmLogOut() {
 function _renderUserChip(user) {
   const wrap = document.getElementById('user-chip-wrap');
   if (!wrap) return;
-  const username = (!user.isGuest && user.email) ? user.email.split('@')[0] : (user.name || 'G');
+  // Hide the chip for signed-in users; only show for guests
+  if (!user.isGuest) {
+    wrap.innerHTML = '';
+    return;
+  }
+  const username = user.name || 'G';
   const initial = username.charAt(0).toUpperCase();
-  const avatarContent = user.photo ? `<img src="${user.photo}" alt="${username}" />` : initial;
-  const displayName = user.isGuest ? 'Guest' : (username.charAt(0).toUpperCase() + username.slice(1));
+  const displayName = 'Guest';
   wrap.innerHTML = `
     <div class="user-chip">
-      <div class="user-chip-avatar">${avatarContent}</div>
+      <div class="user-chip-avatar">${initial}</div>
       <div class="user-chip-name">${displayName}</div>
     </div>`;
 }

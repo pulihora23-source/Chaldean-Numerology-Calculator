@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<meta name="theme-color" content="#0B1020" />
+<meta name="theme-color" content="#D4AF37" />
+<meta name="description" content="Decode your destiny through Chaldean Numerology. Personalised readings, daily forecasts, and ancient wisdom." />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Nakshatra Speaks" />
+<meta name="application-name" content="Nakshatra Speaks" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
 <title>Chaldean Numerology Pro — Nakshatra Speaks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -2342,7 +2350,7 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
       <div class="s-header-title">How to Use</div>
       <div style="width:38px;"></div>
     </div>
-    <div class="settings-section" style="padding-bottom: calc(120px + env(safe-area-inset-bottom));">
+    <div class="settings-section">
 
       <!-- Hero -->
       <div style="background:linear-gradient(135deg,rgba(108,74,182,0.18),rgba(212,175,55,0.10));border:0.5px solid var(--gold-border);border-radius:20px;padding:26px 20px 22px;margin:0 2px 18px;text-align:center;">
@@ -2680,11 +2688,11 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
           </div>
         </div>
         <div style="display:flex;gap:8px;">
-          <button onclick="copyEmail()" id="copy-email-btn" style="flex:1;padding:13px 8px;background:rgba(0,200,150,0.18);border:1px solid rgba(0,200,150,0.7);border-radius:10px;color:#00C896;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:0.3px;">
-            <i class="fas fa-copy" style="font-size:14px;"></i> Copy Email
+          <button onclick="copyEmail()" id="copy-email-btn" style="flex:1;padding:11px 8px;background:rgba(0,200,150,0.12);border:0.5px solid rgba(0,200,150,0.4);border-radius:10px;color:#00C896;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+            <i class="fas fa-copy"></i> Copy Email
           </button>
-          <button onclick="openGmail()" style="flex:1;padding:13px 8px;background:rgba(234,67,53,0.18);border:1px solid rgba(234,67,53,0.7);border-radius:10px;color:#EA4335;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:0.3px;">
-            <i class="fab fa-google" style="font-size:14px;"></i> Open Gmail
+          <button onclick="openGmail()" style="flex:1;padding:11px 8px;background:rgba(234,67,53,0.12);border:0.5px solid rgba(234,67,53,0.4);border-radius:10px;color:#EA4335;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+            <i class="fab fa-google"></i> Open Gmail
           </button>
         </div>
       </div>
@@ -2937,11 +2945,11 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
       <div style="background:var(--card);border:0.5px solid var(--purple-border);border-radius:16px;padding:16px;margin:0 2px 14px;">
         <div style="font-size:10px;color:var(--purple2);letter-spacing:1.2px;text-transform:uppercase;font-weight:700;margin-bottom:12px;text-align:center;">✦ Rate on App Store</div>
         <div style="display:flex;gap:10px;">
-          <button onclick="openStore('google')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:rgba(1,208,132,0.15);border:1px solid rgba(1,208,132,0.7);border-radius:12px;color:#01D084;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.3px;">
-            <i class="fab fa-google-play" style="font-size:18px;"></i> Google Play
+          <button onclick="openStore('google')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.12);border-radius:12px;color:var(--white);font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;cursor:pointer;">
+            <i class="fab fa-google-play" style="font-size:18px;color:#01D084;"></i> Google Play
           </button>
-          <button onclick="openStore('apple')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.6);border-radius:12px;color:var(--white);font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.3px;">
-            <i class="fab fa-apple" style="font-size:20px;"></i> App Store
+          <button onclick="openStore('apple')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.12);border-radius:12px;color:var(--white);font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;cursor:pointer;">
+            <i class="fab fa-apple" style="font-size:20px;color:var(--white);"></i> App Store
           </button>
         </div>
       </div>
@@ -6184,6 +6192,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+</script>
+
+<script>
+  // Register Service Worker for PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('SW registered:', reg.scope))
+        .catch(err => console.log('SW error:', err));
+    });
+  }
 </script>
 </body>
 </html>

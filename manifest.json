@@ -1,0 +1,75 @@
+{
+  "name": "Chaldean Numerology Calculator",
+  "short_name": "Numerology Calculator",
+  "description": "Decode your destiny through Chaldean Numerology. Get personalised readings, daily forecasts, and ancient wisdom.",
+  "start_url": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/",
+  "scope": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1020",
+  "theme_color": "#D4AF37",
+  "lang": "en",
+  "categories": ["lifestyle", "entertainment", "education"],
+  "icons": [
+    {
+      "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Calculator",
+      "short_name": "Calculator",
+      "url": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/",
+      "icons": [{ 
+        "src": "https://pulihora23-source.github.io/Chaldean-Numerology-Calculator/icon-96.png",
+        "sizes": "96x96",
+        "type": "image/png"
+      }]
+    }
+  ]
+}

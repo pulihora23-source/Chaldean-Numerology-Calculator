@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <meta name="theme-color" content="#0B1020" />
 <title>Chaldean Numerology Pro — Nakshatra Speaks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -286,7 +286,7 @@ html, body { height: 100%; overflow: hidden; background: #0B1020; }
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 80px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
   z-index: 1;
   animation: screenIn 0.3s ease;
 }
@@ -427,7 +427,8 @@ html, body { height: 100%; overflow: hidden; background: #0B1020; }
   position: fixed;
   bottom: 0; left: 50%; transform: translateX(-50%);
   width: 100%; max-width: 430px;
-  height: 72px;
+  height: calc(72px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
   background: rgba(11,16,32,0.95);
   backdrop-filter: blur(20px);
   border-top: 0.5px solid var(--gold-border);
@@ -1348,7 +1349,7 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
   flex-direction: column;
   align-items: center;
   min-height: 100%;
-  padding-bottom: 100px;
+  padding-bottom: calc(100px + env(safe-area-inset-bottom));
   position: relative;
   z-index: 2;
 }
@@ -1823,7 +1824,7 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
         <div class="ref-cell"><div class="ref-num">8</div><div class="ref-lets">F P</div></div>
       </div>
     </div>
-    <div style="height:16px;"></div>
+    <div style="height:40px;"></div>
   </div>
 
   <!-- ════════════════ RESULT ════════════════ -->
@@ -2317,10 +2318,10 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
           <div id="profile-account-email" style="font-size:11px;color:var(--dim);margin-top:1px;">Browsing as guest</div>
         </div>
       </div>
-      <div class="menu-row" onclick="confirmLogOut()" style="border-color:rgba(255,92,92,0.25);">
-        <div class="menu-ico" style="background:rgba(255,92,92,0.1);border-color:rgba(255,92,92,0.3);color:#FF5C5C;"><i class="fas fa-sign-out-alt"></i></div>
-        <div class="menu-txt" style="color:#FF5C5C;">Sign Out</div>
-        <i class="fas fa-chevron-right menu-arr" style="color:rgba(255,92,92,0.4);"></i>
+      <div class="menu-row" onclick="confirmLogOut()" style="border-color:rgba(255,92,92,0.45);background:rgba(255,92,92,0.08);">
+        <div class="menu-ico" style="background:rgba(255,92,92,0.18);border-color:rgba(255,92,92,0.5);color:#FF5C5C;"><i class="fas fa-sign-out-alt"></i></div>
+        <div class="menu-txt" style="color:#FF5C5C;font-weight:700;font-size:14px;">Sign Out</div>
+        <i class="fas fa-chevron-right menu-arr" style="color:rgba(255,92,92,0.6);"></i>
       </div>
     </div>
 
@@ -3439,7 +3440,7 @@ let _googleProvider = null;
       getAuth, onAuthStateChanged,
       signInWithEmailAndPassword, createUserWithEmailAndPassword,
       sendPasswordResetEmail, signOut, updateProfile,
-      GoogleAuthProvider, signInWithPopup
+      GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
     const firebaseConfig = {
@@ -3464,7 +3465,27 @@ let _googleProvider = null;
     window._fbUpdateProfile  = (user, data) => updateProfile(user, data);
     window._fbResetPassword  = (email) => sendPasswordResetEmail(auth, email);
     window._fbSignOut        = () => signOut(auth);
-    window._fbGooglePopup    = () => signInWithPopup(auth, googleProvider);
+    // Use redirect (works in WebView/APK) with popup fallback for desktop browsers
+    window._fbGoogleSignIn   = () => {
+      const isWebView = /wv|WebView/.test(navigator.userAgent) || (typeof Android !== 'undefined');
+      if (isWebView) {
+        return signInWithRedirect(auth, googleProvider);
+      } else {
+        return signInWithPopup(auth, googleProvider);
+      }
+    };
+    window._fbGooglePopup    = window._fbGoogleSignIn; // keep backward compat
+
+    // Handle redirect result (after coming back from Google redirect)
+    getRedirectResult(auth).then(result => {
+      if (result && result.user) {
+        window._onFirebaseUser(result.user);
+      }
+    }).catch(err => {
+      if (err.code && err.code !== 'auth/no-auth-event') {
+        console.error('Redirect result error:', err);
+      }
+    });
 
     // Auto-login if user is already signed in
     onAuthStateChanged(auth, (user) => {
@@ -3882,17 +3903,13 @@ function confirmLogOut() {
 function _renderUserChip(user) {
   const wrap = document.getElementById('user-chip-wrap');
   if (!wrap) return;
-  // Hide the chip for signed-in users; only show for guests
-  if (!user.isGuest) {
-    wrap.innerHTML = '';
-    return;
-  }
-  const username = user.name || 'G';
+  const username = (!user.isGuest && user.email) ? user.email.split('@')[0] : (user.name || 'G');
   const initial = username.charAt(0).toUpperCase();
-  const displayName = 'Guest';
+  const avatarContent = user.photo ? `<img src="${user.photo}" alt="${username}" />` : initial;
+  const displayName = user.isGuest ? 'Guest' : (username.charAt(0).toUpperCase() + username.slice(1));
   wrap.innerHTML = `
     <div class="user-chip">
-      <div class="user-chip-avatar">${initial}</div>
+      <div class="user-chip-avatar">${avatarContent}</div>
       <div class="user-chip-name">${displayName}</div>
     </div>`;
 }
@@ -4126,7 +4143,7 @@ function goScreen(id) {
   document.getElementById('screen-'+id).scrollTop = 0;
   state.currentScreen = id;
   // update nav active state
-  const navMap = {home:'home',calc:'calc',reports:'reports',remedies:'remedies',profile:'profile'};
+  const navMap = {home:'home',calc:'calc',reports:'reports',remedies:'remedies',profile:'profile',result:'result'};
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   if (navMap[id]) document.getElementById('nav-'+navMap[id]).classList.add('active');
   // reset to CYN view only when navigating from nav bar (not from calculate)

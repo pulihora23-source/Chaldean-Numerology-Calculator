@@ -3,15 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<meta name="theme-color" content="#D4AF37" />
-<meta name="description" content="Decode your destiny through Chaldean Numerology. Personalised readings, daily forecasts, and ancient wisdom." />
-<meta name="mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Nakshatra Speaks" />
-<meta name="application-name" content="Nakshatra Speaks" />
-<link rel="manifest" href="manifest.json" />
-<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="theme-color" content="#0B1020" />
 <title>Chaldean Numerology Pro — Nakshatra Speaks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -310,39 +302,50 @@ html, body { height: 100%; overflow: hidden; background: #0B1020; }
 #screen-calc::-webkit-scrollbar,
 #screen-profile::-webkit-scrollbar,
 #screen-history::-webkit-scrollbar,
-#screen-forecast::-webkit-scrollbar {
-  width: 3px;
+#screen-forecast::-webkit-scrollbar,
+#screen-result::-webkit-scrollbar {
+  width: 2px;
 }
 #screen-home::-webkit-scrollbar-track,
 #screen-calc::-webkit-scrollbar-track,
 #screen-profile::-webkit-scrollbar-track,
 #screen-history::-webkit-scrollbar-track,
-#screen-forecast::-webkit-scrollbar-track {
+#screen-forecast::-webkit-scrollbar-track,
+#screen-result::-webkit-scrollbar-track {
   background: transparent;
 }
 #screen-home::-webkit-scrollbar-thumb,
 #screen-calc::-webkit-scrollbar-thumb,
 #screen-profile::-webkit-scrollbar-thumb,
 #screen-history::-webkit-scrollbar-thumb,
-#screen-forecast::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.3);
+#screen-forecast::-webkit-scrollbar-thumb,
+#screen-result::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.45);
   border-radius: 10px;
 }
 #screen-home::-webkit-scrollbar-thumb:hover,
 #screen-calc::-webkit-scrollbar-thumb:hover,
 #screen-profile::-webkit-scrollbar-thumb:hover,
 #screen-history::-webkit-scrollbar-thumb:hover,
-#screen-forecast::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 175, 55, 0.55);
+#screen-forecast::-webkit-scrollbar-thumb:hover,
+#screen-result::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.7);
 }
 #screen-home,
 #screen-calc,
 #screen-profile,
 #screen-history,
-#screen-forecast {
+#screen-forecast,
+#screen-result {
   scrollbar-width: thin;
-  scrollbar-color: rgba(212, 175, 55, 0.3) transparent;
+  scrollbar-color: rgba(212, 175, 55, 0.45) transparent;
 }
+
+/* DOB select scrollbar (inside the dropdown list on desktop) */
+.dob-sel::-webkit-scrollbar { width: 2px; }
+.dob-sel::-webkit-scrollbar-track { background: transparent; }
+.dob-sel::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.45); border-radius: 10px; }
+.dob-sel { scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.45) transparent; }
 
 #screen-profile {
   padding-bottom: calc(140px + env(safe-area-inset-bottom));
@@ -636,6 +639,36 @@ html, body { height: 100%; overflow: hidden; background: #0B1020; }
 .f-input:focus { border-color: rgba(212,175,55,0.55); }
 .f-input::placeholder { color: var(--dim); font-size: 13px; }
 
+/* Input with clear button wrapper */
+.inp-wrap { position: relative; display: flex; align-items: center; }
+.inp-wrap .f-input { padding-right: 42px; }
+.inp-clear {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.1); border: none; border-radius: 50%;
+  width: 22px; height: 22px; cursor: pointer; display: none;
+  align-items: center; justify-content: center;
+  color: var(--dim); font-size: 11px; flex-shrink: 0;
+  transition: all 0.15s;
+}
+.inp-clear.visible { display: flex; }
+.inp-clear:hover { background: rgba(212,175,55,0.2); color: var(--gold); }
+
+/* DOB dropdown row */
+.dob-row { display: flex; gap: 8px; }
+.dob-sel {
+  flex: 1; background: rgba(255,255,255,0.05);
+  border: 0.5px solid rgba(212,175,55,0.22); border-radius: 12px;
+  padding: 13px 10px; color: var(--white); font-size: 13px;
+  font-family: 'Poppins', sans-serif; outline: none;
+  transition: border-color 0.2s; -webkit-appearance: none;
+  appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23D4AF37' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  padding-right: 28px;
+}
+.dob-sel:focus { border-color: rgba(212,175,55,0.55); }
+.dob-sel option { background: #182035; color: var(--white); }
+
 /* Live preview */
 .live-box {
   background: var(--purple-dim); border: 0.5px solid var(--purple-border);
@@ -676,13 +709,14 @@ html, body { height: 100%; overflow: hidden; background: #0B1020; }
 /* Chaldean table */
 .chaldean-ref { margin: 18px 0 0; position: relative; z-index: 2; }
 .ref-title { font-size: 11px; color: var(--dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-.ref-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.ref-cell {
-  background: rgba(212,175,55,0.05); border: 0.5px solid rgba(212,175,55,0.18);
-  border-radius: 10px; padding: 8px 4px; text-align: center;
-}
-.ref-num { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); font-weight: 700; }
-.ref-lets { font-size: 8px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+.ref-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 0.5px solid rgba(212,175,55,0.22); border-radius: 12px; overflow: hidden; }
+.ref-table th { background: rgba(212,175,55,0.12); color: var(--gold); font-family: 'Cinzel',serif; font-size: 11px; padding: 9px 8px; text-align: center; letter-spacing: 0.5px; border-bottom: 0.5px solid rgba(212,175,55,0.2); }
+.ref-table td { padding: 9px 8px; text-align: center; font-size: 12px; border-bottom: 0.5px solid rgba(255,255,255,0.05); }
+.ref-table tr:last-child td { border-bottom: none; }
+.ref-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+.ref-td-letters { color: var(--white); font-weight: 500; }
+.ref-td-num { color: var(--gold); font-family: 'Cinzel',serif; font-weight: 700; font-size: 14px; }
+.ref-td-planet { color: var(--muted); font-size: 12px; }
 
 /* ─────────────────────────────────────────────
    RESULT SCREEN
@@ -1735,7 +1769,10 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
       <div id="tab-name">
         <div class="f-group">
           <label class="f-label">Full Name</label>
-          <input class="f-input" id="inp-name" type="text" placeholder="Enter your full name" oninput="liveNamePreview(this.value,'name-preview','name-chips','name-sum')" autocomplete="off" />
+          <div class="inp-wrap">
+            <input class="f-input" id="inp-name" type="text" placeholder="Enter your full name" oninput="liveNamePreview(this.value,'name-preview','name-chips','name-sum'); toggleClear('inp-name','clr-name')" autocomplete="off" />
+            <button class="inp-clear" id="clr-name" onclick="clearInput('inp-name','clr-name'); liveNamePreview('','name-preview','name-chips','name-sum')"><i class="fas fa-times"></i></button>
+          </div>
         </div>
         <div class="live-box" id="name-preview">
           <div class="live-label">Live Chaldean Mapping</div>
@@ -1744,10 +1781,34 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
         </div>
         <div class="f-group">
           <label class="f-label">Date of Birth</label>
-          <input class="f-input" id="inp-dob" type="date" />
+          <div class="dob-row">
+            <select class="dob-sel" id="dob-day" onchange="syncDobFromDropdown()">
+              <option value="" id="dob-day-ph">Day</option>
+              <option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
+            </select>
+            <select class="dob-sel" id="dob-month" onchange="syncDobFromDropdown()">
+              <option value="" id="dob-month-ph">Month</option>
+              <option value="01" data-en="January" data-te="జనవరి" data-hi="जनवरी">January</option>
+              <option value="02" data-en="February" data-te="ఫిబ్రవరి" data-hi="फरवरी">February</option>
+              <option value="03" data-en="March" data-te="మార్చి" data-hi="मार्च">March</option>
+              <option value="04" data-en="April" data-te="ఏప్రిల్" data-hi="अप्रैल">April</option>
+              <option value="05" data-en="May" data-te="మే" data-hi="मई">May</option>
+              <option value="06" data-en="June" data-te="జూన్" data-hi="जून">June</option>
+              <option value="07" data-en="July" data-te="జులై" data-hi="जुलाई">July</option>
+              <option value="08" data-en="August" data-te="ఆగస్టు" data-hi="अगस्त">August</option>
+              <option value="09" data-en="September" data-te="సెప్టెంబర్" data-hi="सितंबर">September</option>
+              <option value="10" data-en="October" data-te="అక్టోబర్" data-hi="अक्टूबर">October</option>
+              <option value="11" data-en="November" data-te="నవంబర్" data-hi="नवंबर">November</option>
+              <option value="12" data-en="December" data-te="డిసెంబర్" data-hi="दिसंबर">December</option>
+            </select>
+            <select class="dob-sel" id="dob-year" onchange="syncDobFromDropdown()">
+              <option value="" id="dob-year-ph">Year</option>
+            </select>
+          </div>
+          <input type="hidden" id="inp-dob" />
           <div style="margin-top:7px;display:flex;align-items:center;gap:6px;background:rgba(108,74,182,0.12);border:0.5px solid rgba(108,74,182,0.3);border-radius:10px;padding:7px 11px;">
             <i class="fas fa-star" style="font-size:10px;color:var(--gold);"></i>
-            <span style="font-size:10px;color:var(--muted);">Add DOB for <span style="color:var(--gold);font-weight:600;">AI-personalized</span> readings across all 5 life categories</span>
+            <span style="font-size:10px;color:var(--muted);">Add DOB for <span style="color:var(--gold);font-weight:600;">Life Path</span> number calculation</span>
           </div>
         </div>
         <div class="f-group">
@@ -1764,7 +1825,10 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
       <div id="tab-mobile" style="display:none;">
         <div class="f-group">
           <label class="f-label">Mobile Number</label>
-          <input class="f-input" id="inp-mobile" type="tel" placeholder="Enter mobile number" oninput="liveDigitPreview(this.value,'mob-preview','mob-chips','mob-sum')" />
+          <div class="inp-wrap">
+            <input class="f-input" id="inp-mobile" type="tel" placeholder="Enter mobile number" oninput="liveDigitPreview(this.value,'mob-preview','mob-chips','mob-sum'); toggleClear('inp-mobile','clr-mobile')" />
+            <button class="inp-clear" id="clr-mobile" onclick="clearInput('inp-mobile','clr-mobile'); liveDigitPreview('','mob-preview','mob-chips','mob-sum')"><i class="fas fa-times"></i></button>
+          </div>
         </div>
         <div class="live-box" id="mob-preview">
           <div class="live-label">Digital Root Analysis</div>
@@ -1777,7 +1841,10 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
       <div id="tab-vehicle" style="display:none;">
         <div class="f-group">
           <label class="f-label">Vehicle Registration Number</label>
-          <input class="f-input" id="inp-vehicle" type="text" placeholder="e.g. AP 28 BH 1234" oninput="liveDigitPreview(this.value,'veh-preview','veh-chips','veh-sum')" />
+          <div class="inp-wrap">
+            <input class="f-input" id="inp-vehicle" type="text" placeholder="e.g. AP 28 BH 1234" oninput="liveDigitPreview(this.value,'veh-preview','veh-chips','veh-sum'); toggleClear('inp-vehicle','clr-vehicle')" />
+            <button class="inp-clear" id="clr-vehicle" onclick="clearInput('inp-vehicle','clr-vehicle'); liveDigitPreview('','veh-preview','veh-chips','veh-sum')"><i class="fas fa-times"></i></button>
+          </div>
         </div>
         <div class="live-box" id="veh-preview">
           <div class="live-label">Digit Sum Analysis</div>
@@ -1807,7 +1874,10 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
       <div id="tab-business" style="display:none;">
         <div class="f-group">
           <label class="f-label">Business / Brand Name</label>
-          <input class="f-input" id="inp-biz" type="text" placeholder="Enter business name" oninput="liveNamePreview(this.value,'biz-preview','biz-chips','biz-sum')" />
+          <div class="inp-wrap">
+            <input class="f-input" id="inp-biz" type="text" placeholder="Enter business name" oninput="liveNamePreview(this.value,'biz-preview','biz-chips','biz-sum'); toggleClear('inp-biz','clr-biz')" />
+            <button class="inp-clear" id="clr-biz" onclick="clearInput('inp-biz','clr-biz'); liveNamePreview('','biz-preview','biz-chips','biz-sum')"><i class="fas fa-times"></i></button>
+          </div>
         </div>
         <div class="live-box" id="biz-preview">
           <div class="live-label">Business Name Vibration</div>
@@ -1824,16 +1894,25 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
 
       <div class="chaldean-ref">
         <div class="ref-title">Chaldean Reference Table</div>
-        <div class="ref-grid">
-          <div class="ref-cell"><div class="ref-num">1</div><div class="ref-lets">A I J Q Y</div></div>
-          <div class="ref-cell"><div class="ref-num">2</div><div class="ref-lets">B K R</div></div>
-          <div class="ref-cell"><div class="ref-num">3</div><div class="ref-lets">C G L S</div></div>
-          <div class="ref-cell"><div class="ref-num">4</div><div class="ref-lets">D M T</div></div>
-          <div class="ref-cell"><div class="ref-num">5</div><div class="ref-lets">E H N X</div></div>
-          <div class="ref-cell"><div class="ref-num">6</div><div class="ref-lets">U V W</div></div>
-          <div class="ref-cell"><div class="ref-num">7</div><div class="ref-lets">O Z</div></div>
-          <div class="ref-cell"><div class="ref-num">8</div><div class="ref-lets">F P</div></div>
-        </div>
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>అక్షరం</th>
+              <th>సంఖ్య</th>
+              <th>గ్రహం</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="ref-td-letters">A, I, J, Q, Y</td><td class="ref-td-num">1</td><td class="ref-td-planet">సూర్యుడు</td></tr>
+            <tr><td class="ref-td-letters">B, K, R</td><td class="ref-td-num">2</td><td class="ref-td-planet">చంద్రుడు</td></tr>
+            <tr><td class="ref-td-letters">C, G, L, S</td><td class="ref-td-num">3</td><td class="ref-td-planet">గురువు</td></tr>
+            <tr><td class="ref-td-letters">D, M, T</td><td class="ref-td-num">4</td><td class="ref-td-planet">రాహువు</td></tr>
+            <tr><td class="ref-td-letters">E, H, N, X</td><td class="ref-td-num">5</td><td class="ref-td-planet">బుధుడు</td></tr>
+            <tr><td class="ref-td-letters">U, V, W</td><td class="ref-td-num">6</td><td class="ref-td-planet">శుక్రుడు</td></tr>
+            <tr><td class="ref-td-letters">O, Z</td><td class="ref-td-num">7</td><td class="ref-td-planet">కేతువు</td></tr>
+            <tr><td class="ref-td-letters">F, P</td><td class="ref-td-num">8</td><td class="ref-td-planet">శని</td></tr>
+          </tbody>
+        </table>
       </div>
       <div style="height:20px;"></div>
 
@@ -2172,7 +2251,10 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
     <div style="padding:0 20px; position:relative; z-index:2;">
       <div class="f-group">
         <label class="f-label">Person 1 — Full Name</label>
-        <input class="f-input" id="c-name1" type="text" placeholder="e.g. Rahul Sharma" style="margin-bottom:8px;" />
+        <div class="inp-wrap">
+          <input class="f-input" id="c-name1" type="text" placeholder="e.g. Rahul Sharma" style="margin-bottom:0;" oninput="toggleClear('c-name1','clr-cname1')" />
+          <button class="inp-clear" id="clr-cname1" onclick="clearInput('c-name1','clr-cname1')"><i class="fas fa-times"></i></button>
+        </div>
       </div>
       <div class="f-group">
         <label class="f-label">Person 1 — Date of Birth</label>
@@ -2185,7 +2267,10 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
       </div>
       <div class="f-group">
         <label class="f-label">Person 2 — Full Name</label>
-        <input class="f-input" id="c-name2" type="text" placeholder="e.g. Priya Patel" style="margin-bottom:8px;" />
+        <div class="inp-wrap">
+          <input class="f-input" id="c-name2" type="text" placeholder="e.g. Priya Patel" style="margin-bottom:0;" oninput="toggleClear('c-name2','clr-cname2')" />
+          <button class="inp-clear" id="clr-cname2" onclick="clearInput('c-name2','clr-cname2')"><i class="fas fa-times"></i></button>
+        </div>
       </div>
       <div class="f-group">
         <label class="f-label">Person 2 — Date of Birth</label>
@@ -3286,6 +3371,49 @@ textarea.contact-input { resize: none; min-height: 110px; line-height: 1.6; }
 </div>
 
 <script>
+/* ─── CLEAR BUTTON HELPERS ─── */
+function toggleClear(inputId, btnId) {
+  const input = document.getElementById(inputId);
+  const btn = document.getElementById(btnId);
+  if (!input || !btn) return;
+  if (input.value.trim().length > 0) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+}
+
+function clearInput(inputId, btnId) {
+  const input = document.getElementById(inputId);
+  const btn = document.getElementById(btnId);
+  if (input) input.value = '';
+  if (btn) btn.classList.remove('visible');
+  input && input.focus();
+}
+
+/* ─── DOB DROPDOWN HELPERS ─── */
+function initDobYears() {
+  const sel = document.getElementById('dob-year');
+  if (!sel) return;
+  // Remove all options except the placeholder (first one)
+  while (sel.options.length > 1) sel.remove(1);
+  const cur = new Date().getFullYear();
+  for (let y = cur; y >= 1930; y--) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    sel.appendChild(opt);
+  }
+}
+
+function syncDobFromDropdown() {
+  const d = document.getElementById('dob-day').value;
+  const m = document.getElementById('dob-month').value;
+  const y = document.getElementById('dob-year').value;
+  const hidden = document.getElementById('inp-dob');
+  if (hidden) hidden.value = (d && m && y) ? `${y}-${m}-${d}` : '';
+}
+
 /* ─── CHALDEAN MAP ─── */
 const CH = {A:1,I:1,J:1,Q:1,Y:1,B:2,K:2,R:2,C:3,G:3,L:3,S:3,D:4,M:4,T:4,E:5,H:5,N:5,X:5,U:6,V:6,W:6,O:7,Z:7,F:8,P:8};
 
@@ -3480,29 +3608,34 @@ let _googleProvider = null;
     window._fbUpdateProfile  = (user, data) => updateProfile(user, data);
     window._fbResetPassword  = (email) => sendPasswordResetEmail(auth, email);
     window._fbSignOut        = () => signOut(auth);
-    // Use redirect (works in WebView/APK) with popup fallback for desktop browsers
-    window._fbGoogleSignIn   = () => {
-      const isWebView = /wv|WebView/.test(navigator.userAgent) || (typeof Android !== 'undefined');
-      if (isWebView) {
+    // Smart sign-in: popup for browsers (works on GitHub Pages), redirect only for WebView/APK
+    window._fbGoogleSignIn = () => {
+      const ua = navigator.userAgent;
+      const isWebView = ua.indexOf('wv') > -1 || ua.indexOf('; wv)') > -1;
+      const isAndroidApp = typeof Android !== 'undefined';
+      if (isWebView || isAndroidApp) {
         return signInWithRedirect(auth, googleProvider);
-      } else {
-        return signInWithPopup(auth, googleProvider);
       }
+      return signInWithPopup(auth, googleProvider);
     };
-    window._fbGooglePopup    = window._fbGoogleSignIn; // keep backward compat
+    window._fbGooglePopup = window._fbGoogleSignIn;
 
-    // Handle redirect result (after coming back from Google redirect)
+    // ── Handle redirect result when user comes back from Google ──
     getRedirectResult(auth).then(result => {
       if (result && result.user) {
+        // User just came back from Google account picker — sign them in
         window._onFirebaseUser(result.user);
       }
     }).catch(err => {
       if (err.code && err.code !== 'auth/no-auth-event') {
-        console.error('Redirect result error:', err);
+        console.error('Redirect result error:', err.code, err.message);
+        if (err.code === 'auth/unauthorized-domain') {
+          showToast('⚠️ Domain not authorized in Firebase. Add this domain in Firebase Console → Authentication → Settings → Authorized Domains.');
+        }
       }
     });
 
-    // Auto-login if user is already signed in
+    // Auto-login if user is already signed in (persistent session)
     onAuthStateChanged(auth, (user) => {
       if (user) {
         window._onFirebaseUser(user);
@@ -3510,12 +3643,22 @@ let _googleProvider = null;
         window._onFirebaseSignOut();
       }
     });
+    // Signal that Firebase is fully ready
+    window._fbReady = true;
+    // If Google sign-in was queued while Firebase was loading, run it now
+    if (window._fbPendingGoogleSignIn) {
+      window._fbPendingGoogleSignIn = false;
+      if (window.loginWithGoogle) window.loginWithGoogle();
+    }
   `;
   document.head.appendChild(script1);
 })();
 
 // Called by Firebase when user signs in
 window._onFirebaseUser = function(fbUser) {
+  // Remove any loading splashes
+  document.getElementById('redirect-splash')?.remove();
+  document.getElementById('gauth-loading')?.remove();
   const name  = fbUser.displayName || fbUser.email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
   const email = fbUser.email;
   const photo = fbUser.photoURL || null;
@@ -3645,9 +3788,43 @@ function _shakeField(el) {
 
 /* ── GOOGLE SIGN-IN ── */
 function loginWithGoogle() {
+  // If Firebase not ready yet, show loading UI and wait
   if (!window._fbGooglePopup) {
-    showToast("Firebase loading… please try again in a moment"); return;
+    // Show a gentle loading state on the button
+    const btn = document.querySelector('.ls-google-btn');
+    const originalHTML = btn ? btn.innerHTML : null;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<span style="display:flex;align-items:center;justify-content:center;gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite;">
+          <circle cx="12" cy="12" r="10" stroke="rgba(212,175,55,0.3)" stroke-width="3" fill="none"/>
+          <path d="M12 2 a10 10 0 0 1 10 10" stroke="var(--gold)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+        Loading Firebase…</span>`;
+    }
+
+    let waited = 0;
+    const poll = setInterval(() => {
+      waited += 200;
+      if (window._fbGooglePopup) {
+        clearInterval(poll);
+        if (btn && originalHTML) { btn.innerHTML = originalHTML; btn.disabled = false; }
+        _doGoogleSignIn();
+      } else if (waited >= 10000) {
+        clearInterval(poll);
+        if (btn && originalHTML) { btn.innerHTML = originalHTML; btn.disabled = false; }
+        showToast('Connection error — please check your internet and try again.');
+      }
+    }, 200);
+    return;
   }
+  _doGoogleSignIn();
+}
+
+function _doGoogleSignIn() {
+  const ua = navigator.userAgent;
+  const isWebView = /wv/.test(ua) || (typeof Android !== 'undefined');
+  const usingRedirect = isWebView;
 
   const overlay = document.createElement("div");
   overlay.className = "gauth-overlay";
@@ -3662,23 +3839,45 @@ function loginWithGoogle() {
       </svg>
     </div>
     <div class="gauth-spinner"></div>
-    <div class="gauth-txt">Opening Google Sign-In…</div>
-    <div class="gauth-sub">A popup window will appear</div>`;
+    <div class="gauth-txt">${usingRedirect ? 'Redirecting to Google…' : 'Opening Google Sign-In…'}</div>
+    <div class="gauth-sub">${usingRedirect ? "You'll be taken to Google's sign-in page" : 'Select your Google account in the popup'}</div>`;
   document.body.appendChild(overlay);
+
+  if (usingRedirect) {
+    sessionStorage.setItem('_fbRedirectPending', '1');
+  }
 
   window._fbGooglePopup()
     .then(result => {
+      // Popup completed successfully (redirect won't reach here)
       document.getElementById("gauth-loading")?.remove();
+      if (result && result.user) {
+        window._onFirebaseUser(result.user);
+      }
     })
     .catch(err => {
+      sessionStorage.removeItem('_fbRedirectPending');
       document.getElementById("gauth-loading")?.remove();
       if (err.code === "auth/popup-closed-by-user" || err.code === "auth/cancelled-popup-request") {
-        // User closed — do nothing
+        // User closed popup — silent
       } else if (err.code === "auth/popup-blocked") {
-        showToast("⚠️ Popup blocked! Look for the popup icon in your address bar and allow popups, then try again.");
+        // Popup was blocked — fall back to redirect
+        showToast("Opening Google sign-in page…");
+        sessionStorage.setItem('_fbRedirectPending', '1');
+        if (window._fbAuth && window._fbGoogle) {
+          const { signInWithRedirect } = window._fbAuthModule || {};
+          // Use the already-imported redirect via a workaround
+          window._fbGoogleSignIn = () => {
+            import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js')
+              .then(({ signInWithRedirect }) => signInWithRedirect(window._fbAuth, window._fbGoogle));
+          };
+          window._fbGoogleSignIn();
+        }
+      } else if (err.code === 'auth/unauthorized-domain') {
+        showToast('⚠️ Domain not authorized. Check Firebase Console → Authentication → Authorized Domains.');
       } else {
-        showToast("Google sign-in error: " + (err.code || err.message));
-        console.error("Google auth error:", err);
+        showToast('Sign-in error: ' + (err.code || err.message));
+        console.error('Google sign-in error:', err);
       }
     });
 }
@@ -4414,8 +4613,8 @@ async function doCalculate() {
   updateProfile(state.lastResult);
   document.getElementById('screen-result').scrollTop = 0;
 
-  // ── AI-powered 5-category reading (only for name + DOB — human-related inputs) ──
-  const isHumanReading = (state.activeTab === 'name' && inputName && inputDob);
+  // ── AI-powered 5-category reading (only for person names with DOB) ──
+  const isHumanReading = (state.activeTab === 'name' && inputName && inputName.trim().includes(' ') && inputDob);
   if (isHumanReading) {
     await fetchAiReading(state.lastResult);
   }
@@ -4530,11 +4729,14 @@ Make it specific to ${r.name}, deeply insightful, mystical yet practical. Each k
 function renderResult(r) {
   if (!r || !r.data || !r.planet) return;
 
-  const isLuckyType = ['MOBILE NUMBER','VEHICLE NUMBER','BUSINESS NAME'].includes(r.type);
+  // Detect if name is a person (has space = multiple words) or a place/city (single word)
+  const isPersonName = r.type === 'NAME NUMBER' && r.name && r.name.trim().includes(' ');
+  const isLuckyType = ['MOBILE NUMBER','VEHICLE NUMBER','BUSINESS NAME'].includes(r.type) ||
+                      (r.type === 'NAME NUMBER' && !isPersonName);
 
   // Header
   document.getElementById('res-header-title').textContent = isLuckyType
-    ? (r.type === 'MOBILE NUMBER' ? '📱 Mobile Analysis' : r.type === 'VEHICLE NUMBER' ? '🚗 Vehicle Analysis' : '🏢 Business Analysis')
+    ? (r.type === 'MOBILE NUMBER' ? '📱 Mobile Analysis' : r.type === 'VEHICLE NUMBER' ? '🚗 Vehicle Analysis' : r.type === 'BUSINESS NAME' ? '🏢 Business Analysis' : '✨ Name Analysis')
     : 'Number ' + r.compound + ' Reading';
   document.getElementById('res-name').textContent = r.name || '—';
   document.getElementById('res-dob').textContent = r.dob ? 'DOB: ' + formatDate(r.dob) : r.type;
@@ -4643,6 +4845,7 @@ function renderLuckyVerdict(r) {
   const isMobile = r.type === 'MOBILE NUMBER';
   const isVehicle = r.type === 'VEHICLE NUMBER';
   const isBusiness = r.type === 'BUSINESS NAME';
+  const isName = r.type === 'NAME NUMBER';
 
   // Determine luck level based on root number and compound
   // Lucky roots: 1,3,5,6,9 | Neutral: 2,7 | Challenging: 4,8
@@ -4781,6 +4984,35 @@ function renderLuckyVerdict(r) {
         ? `This business name has balanced energy. Success is achievable with consistent effort.`
         : `Consider adjusting the spelling to achieve a more favorable root number.`
     });
+  } else if (isName) {
+    rows.push({
+      ico: isLucky ? 'g' : isNeutral ? 'n' : 'b',
+      icon: 'fa-user',
+      head: 'Name Vibration',
+      desc: isLucky
+        ? `This name carries root ${root} energy governed by ${planetShort} — a highly auspicious vibration bringing success, positivity, and good fortune to its bearer.`
+        : isNeutral
+        ? `Root ${root} (${planetShort}) gives this name balanced energy. It neither strongly helps nor hinders its bearer.`
+        : `Root ${root} under ${planetShort} energy creates challenging vibrations. Consider a name spelling correction to reach a more favorable number.`
+    });
+    rows.push({
+      ico: isLucky ? 'g' : 'n',
+      icon: 'fa-star',
+      head: 'Overall Energy',
+      desc: isLucky
+        ? `The compound number ${compound} reduces to the powerful root ${root}, making this a name full of life force, leadership, and magnetic attraction.`
+        : isNeutral
+        ? `Compound ${compound} → root ${root}: this name has steady energy that rewards consistent effort.`
+        : `Compound ${compound} → root ${root}: this name carries heavy vibrations. Chaldean corrections such as adding/removing a letter can significantly improve the energy.`
+    });
+    rows.push({
+      ico: 'n',
+      icon: 'fa-lightbulb',
+      head: 'Tip',
+      desc: isLucky
+        ? `Names with root ${root} are especially lucky for people born on dates 1, 10, 19, 28 of any month.`
+        : `Adding a silent letter or changing the spelling to shift the total to a root of 1, 3, 5, 6, or 9 can transform the name energy.`
+    });
   }
 
   document.getElementById('lv-rows').innerHTML = rows.map(row => `
@@ -4793,26 +5025,37 @@ function renderLuckyVerdict(r) {
     </div>
   `).join('');
 
-  // Digit energy map
-  const digits = r.name.replace(/[^0-9]/g, '').split('').map(d => parseInt(d)).filter(d => d > 0);
-  const luckyD = [1,3,5,6,9], neutralD = [2,7], unluckyD = [4,8];
-  document.getElementById('lv-digits').innerHTML = digits.slice(0,12).map(d => {
-    const cls = luckyD.includes(d) ? 'hi' : unluckyD.includes(d) ? 'lo' : 'mid';
-    return `<div class="lv-digit ${cls}">${d}</div>`;
-  }).join('') || '<span style="color:var(--dim);font-size:11px;">No numeric digits found</span>';
+  // Digit energy map (or letter chips for names)
+  if (isName) {
+    const CH = {A:1,I:1,J:1,Q:1,Y:1,B:2,K:2,R:2,C:3,G:3,L:3,S:3,D:4,M:4,T:4,E:5,H:5,N:5,X:5,U:6,V:6,W:6,O:7,Z:7,F:8,P:8};
+    const luckyD = [1,3,5,6,9], unluckyD = [4,8];
+    const letters = r.name.toUpperCase().replace(/[^A-Z]/g,'').split('');
+    document.getElementById('lv-digits').innerHTML = letters.slice(0,14).map(l => {
+      const n = CH[l] || 0;
+      const cls = n ? (luckyD.includes(n) ? 'hi' : unluckyD.includes(n) ? 'lo' : 'mid') : 'mid';
+      return `<div class="lv-digit ${cls}" style="font-size:11px;min-width:22px;">${l}<span style="font-size:8px;display:block;color:var(--dim);">${n||'—'}</span></div>`;
+    }).join('') || '<span style="color:var(--dim);font-size:11px;">No letters found</span>';
+  } else {
+    const digits = r.name.replace(/[^0-9]/g, '').split('').map(d => parseInt(d)).filter(d => d > 0);
+    const luckyD = [1,3,5,6,9], neutralD = [2,7], unluckyD = [4,8];
+    document.getElementById('lv-digits').innerHTML = digits.slice(0,12).map(d => {
+      const cls = luckyD.includes(d) ? 'hi' : unluckyD.includes(d) ? 'lo' : 'mid';
+      return `<div class="lv-digit ${cls}">${d}</div>`;
+    }).join('') || '<span style="color:var(--dim);font-size:11px;">No numeric digits found</span>';
+  }
 
   // Recommendation
   const rec = isLucky
     ? `✦ <strong>Excellent Choice!</strong> This ${r.type.toLowerCase()} carries highly positive Chaldean vibrations. The root number ${root} governed by ${planetShort} brings success, protection, and positive energy. You may proceed with full confidence.`
     : isNeutral
     ? `◈ <strong>Neutral.</strong> This ${r.type.toLowerCase()} has moderate vibrations. It will neither strongly help nor harm you.`
-    : `✗ <strong>Not Recommended.</strong> This ${r.type.toLowerCase()} carries challenging Chaldean vibrations under root ${root}. ${isMobile ? 'Consider requesting a new number ending in 1, 3, 5, 6, or 9.' : isBusiness ? 'Consider adjusting the spelling to change the compound number.' : 'Perform protective rituals before using this vehicle.'}`;
+    : `✗ <strong>Not Recommended.</strong> This ${r.type.toLowerCase()} carries challenging Chaldean vibrations under root ${root}. ${isMobile ? 'Consider requesting a new number ending in 1, 3, 5, 6, or 9.' : isBusiness ? 'Consider adjusting the spelling to change the compound number.' : isName ? 'Consider a spelling correction to shift the name root to 1, 3, 5, 6, or 9.' : 'Perform protective rituals before using this vehicle.'}`;
 
   document.getElementById('lv-recommendation').innerHTML = `<p style="line-height:1.75;">${rec}</p>`;
 
   // ── WHO IS THIS NUMBER LUCKY FOR (mobile & vehicle only) ──
   var lv_who = document.getElementById('lv-who-wrap');
-  if (isMobile || isVehicle) {
+  if (isMobile || isVehicle || isName) {
     var rootBirthDates = {
       1: '1, 10, 19, 28', 2: '2, 11, 20, 29', 3: '3, 12, 21, 30',
       4: '4, 13, 22, 31', 5: '5, 14, 23',     6: '6, 15, 24',
@@ -5476,6 +5719,7 @@ const TRANSLATIONS = {
     tab_lifepath:'Life Path', tab_business:'Business',
     lbl_fullname:'Full Name', ph_fullname:'Enter your full name',
     lbl_dob:'Date of Birth',
+    dob_day:'Day', dob_month:'Month', dob_year:'Year',
     lbl_gender:'Gender (Optional)',
     g_male:'♂ Male', g_female:'♀ Female', g_other:'⊕ Other',
     lbl_mobile:'Mobile Number', ph_mobile:'Enter mobile number',
@@ -5595,6 +5839,7 @@ const TRANSLATIONS = {
     tab_lifepath:'జీవన మార్గం', tab_business:'వ్యాపారం',
     lbl_fullname:'పూర్తి పేరు', ph_fullname:'మీ పూర్తి పేరు నమోదు చేయండి',
     lbl_dob:'జన్మ తేదీ',
+    dob_day:'రోజు', dob_month:'నెల', dob_year:'సంవత్సరం',
     lbl_gender:'లింగం (ఐచ్ఛికం)',
     g_male:'♂ పురుషుడు', g_female:'♀ స్త్రీ', g_other:'⊕ ఇతర',
     lbl_mobile:'మొబైల్ నంబర్', ph_mobile:'మొబైల్ నంబర్ నమోదు చేయండి',
@@ -5705,6 +5950,7 @@ const TRANSLATIONS = {
     tab_lifepath:'जीवन पथ', tab_business:'व्यापार',
     lbl_fullname:'पूरा नाम', ph_fullname:'अपना पूरा नाम दर्ज करें',
     lbl_dob:'जन्म तिथि',
+    dob_day:'दिन', dob_month:'महीना', dob_year:'वर्ष',
     lbl_gender:'लिंग (वैकल्पिक)',
     g_male:'♂ पुरुष', g_female:'♀ महिला', g_other:'⊕ अन्य',
     lbl_mobile:'मोबाइल नंबर', ph_mobile:'मोबाइल नंबर दर्ज करें',
@@ -5872,6 +6118,23 @@ function applyTranslations(lang) {
   if(gBtns[0]) gBtns[0].textContent = T.g_male;
   if(gBtns[1]) gBtns[1].textContent = T.g_female;
   if(gBtns[2]) gBtns[2].textContent = T.g_other;
+
+  /* DOB dropdown placeholders and month names */
+  const dobDayPh = document.getElementById('dob-day-ph');
+  const dobMonthPh = document.getElementById('dob-month-ph');
+  const dobYearPh = document.getElementById('dob-year-ph');
+  if (dobDayPh && T.dob_day) dobDayPh.textContent = T.dob_day;
+  if (dobMonthPh && T.dob_month) dobMonthPh.textContent = T.dob_month;
+  if (dobYearPh && T.dob_year) dobYearPh.textContent = T.dob_year;
+  // Update month option text based on lang
+  const monthSel = document.getElementById('dob-month');
+  if (monthSel) {
+    Array.from(monthSel.options).forEach(opt => {
+      if (!opt.value) return;
+      const label = opt.dataset[lang] || opt.dataset['en'] || opt.textContent;
+      opt.textContent = label;
+    });
+  }
 
   /* CTA buttons */
   const ctaBtns = document.querySelectorAll('.cta-btn');
@@ -6159,9 +6422,40 @@ function submitFeedback() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Show login screen on first load
-  showLoginScreen();
+  // Detect if returning from Google redirect (URL has auth params)
+  const isReturningFromGoogle = location.hash.includes('state=') ||
+    location.search.includes('state=') ||
+    sessionStorage.getItem('_fbRedirectPending') === '1';
+
+  if (isReturningFromGoogle) {
+    // Show "Signing you in…" splash — Firebase will call _onFirebaseUser shortly
+    sessionStorage.removeItem('_fbRedirectPending');
+    const splash = document.createElement('div');
+    splash.id = 'redirect-splash';
+    splash.style.cssText = `position:fixed;inset:0;background:#0a0e1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:9999;`;
+    splash.innerHTML = `
+      <svg width="36" height="36" viewBox="0 0 24 24">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      <div style="width:36px;height:36px;border-radius:50%;border:2.5px solid rgba(212,175,55,0.2);border-top-color:#D4AF37;animation:spin 0.8s linear infinite;"></div>
+      <div style="font-family:'Poppins',sans-serif;font-size:14px;color:#F8F8F8;font-weight:500;">Signing you in…</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:11px;color:rgba(122,122,154,0.8);">Please wait a moment</div>`;
+    document.body.appendChild(splash);
+    // Fallback — if not signed in after 8s, remove splash and show login
+    setTimeout(() => {
+      document.getElementById('redirect-splash')?.remove();
+      if (!window.currentUser) showLoginScreen();
+    }, 8000);
+  } else {
+    showLoginScreen();
+  }
+
   _lsSetFocusListeners();
+  // Initialize DOB year dropdown
+  initDobYears();
 
   // Generate login screen stars
   const lsStars = document.getElementById('ls-stars');
@@ -6192,17 +6486,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-</script>
-
-<script>
-  // Register Service Worker for PWA
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('SW registered:', reg.scope))
-        .catch(err => console.log('SW error:', err));
-    });
-  }
 </script>
 </body>
 </html>
